@@ -43,6 +43,8 @@ public class Approval {
 
 	private Date expiresAt;
 
+	private Date lastUpdatedAt;
+
 	public String getUserName() {
 		return userName;
 	}
@@ -82,19 +84,29 @@ public class Approval {
 		this.expiresAt = expiresAt;
 	}
 
+	@JsonSerialize(using = JsonDateSerializer.class, include = JsonSerialize.Inclusion.NON_NULL)
+	public Date getLastUpdatedAt() {
+		return lastUpdatedAt;
+	}
+
+	@JsonDeserialize(using = JsonDateDeserializer.class)
+	public void setLastUpdatedAt(Date lastUpdatedAt) {
+		this.lastUpdatedAt = lastUpdatedAt;
+	}
+
 	@JsonIgnore
 	public boolean isCurrentlyActive() {
 		return expiresAt != null && expiresAt.after(new Date());
 	}
 
 	public Approval(String userId, String clientId, String scope, int expiresIn, ApprovalStatus status) {
-		this(userId, clientId, scope, new Date(), status);
+		this(userId, clientId, scope, new Date(), status, new Date());
 		Calendar expiresAt = Calendar.getInstance();
 		expiresAt.add(Calendar.MILLISECOND, expiresIn);
 		setExpiresAt(expiresAt.getTime());
 	}
 
-	public Approval(String userId, String clientId, String scope, Date expiresAt, ApprovalStatus status) {
+	public Approval(String userId, String clientId, String scope, Date expiresAt, ApprovalStatus status, Date lastUpdatedAt) {
 		this.userName = userId;
 		this.clientId = clientId;
 		this.scope = scope;
@@ -112,6 +124,8 @@ public class Approval {
 		result = prime * result + clientId.hashCode();
 		result = prime * result + scope.hashCode();
 		result = prime * result + status.hashCode();
+		result = prime * result + expiresAt.hashCode();
+		result = prime * result + lastUpdatedAt.hashCode();
 		return result;
 	}
 
@@ -126,7 +140,7 @@ public class Approval {
 
 	@Override
 	public String toString() {
-		return String.format("[%s, %s, %s, %s, %s]", userName, scope, clientId, expiresAt, status.toString());
+		return String.format("[%s, %s, %s, %s, %s, %s]", userName, scope, clientId, expiresAt, status.toString(), lastUpdatedAt);
 	}
 
 	public void setStatus(ApprovalStatus status) {
