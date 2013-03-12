@@ -53,7 +53,7 @@
 					<entry key="vmc">
 						<map>
 							<entry key="id" value="vmc" />
-							<entry key="authorized-grant-types" value="implicit,password,refresh_token" />
+							<entry key="authorized-grant-types" value="implicit,password" />
 							<entry key="scope" value="cloud_controller.read,cloud_controller.write,openid,password.write,scim.userids,cloud_controller.admin,scim.read,scim.write" />
 							<entry key="authorities" value="uaa.none" />
 							<entry key="autoapprove" value="true" />

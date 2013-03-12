@@ -136,7 +136,7 @@ public class ClientAdminEndpointsIntegrationTests {
 
 		ResponseEntity<String> result = serverRunning.getForString("/oauth/clients/" + client.getClientId(), headers);
 		assertEquals(HttpStatus.OK, result.getStatusCode());
-		assertTrue(result.getBody().contains("\"authorized_grant_types\":[\"authorization_code\",\"refresh_token\"]"));
+		assertTrue(result.getBody().contains("\"authorized_grant_types\":[\"authorization_code\"]"));
 	}
 
     @Test
@@ -145,7 +145,7 @@ public class ClientAdminEndpointsIntegrationTests {
 
         ResponseEntity<String> result = serverRunning.getForString("/oauth/clients/" + client.getClientId(), headers);
         assertEquals(HttpStatus.OK, result.getStatusCode());
-        assertTrue(result.getBody().contains("\"authorized_grant_types\":[\"password\",\"refresh_token\"]"));
+        assertTrue(result.getBody().contains("\"authorized_grant_types\":[\"password\"]"));
     }
 
     @Test

@@ -29,7 +29,7 @@ import org.springframework.security.oauth2.provider.token.AuthenticationKeyGener
 
 /**
  * @author Dave Syer
- * 
+ *
  */
 public class UaaAuthenticationKeyGenerator implements AuthenticationKeyGenerator {
 
@@ -69,7 +69,9 @@ public class UaaAuthenticationKeyGenerator implements AuthenticationKeyGenerator
 			values.put(ACCESS_TOKEN_VALIDITY, validity);
 		}
 		validity = client.getRefreshTokenValiditySeconds();
-		if (validity != null && client.getAuthorizedGrantTypes().contains("refresh_token")) {
+		if (validity != null
+				&& (client.getAuthorizedGrantTypes().contains("authorization_code") || client.getAuthorizedGrantTypes()
+						.contains("password"))) {
 			values.put(REFRESH_TOKEN_VALIDITY, validity);
 		}
 		MessageDigest digest;

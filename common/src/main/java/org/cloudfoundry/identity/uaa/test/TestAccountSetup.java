@@ -57,7 +57,7 @@ import org.springframework.web.client.RestOperations;
 
 /**
  * @author Dave Syer
- * 
+ *
  */
 public class TestAccountSetup extends TestWatchman {
 
@@ -131,7 +131,7 @@ public class TestAccountSetup extends TestWatchman {
 
 	private void createAppClient(RestOperations client) {
 		BaseClientDetails clientDetails = new BaseClientDetails("app", "none",
-				"cloud_controller.read,openid,password.write", "password,authorization_code,refresh_token",
+				"cloud_controller.read,openid,password.write", "password,authorization_code",
 				"uaa.resource");
 		clientDetails.setClientSecret("appclientsecret");
 		createClient(client, testAccounts.getClientDetails("oauth.clients.app", clientDetails));

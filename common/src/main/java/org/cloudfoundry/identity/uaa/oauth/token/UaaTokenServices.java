@@ -410,8 +410,7 @@ public class UaaTokenServices implements AuthorizationServerTokenServices, Resou
 	protected boolean isRefreshTokenSupported(AuthorizationRequest authorizationRequest) {
 		String grantType = authorizationRequest.getAuthorizationParameters().get("grant_type");
 
-		return "authorization_code".equals(grantType) || "password".equals(grantType)
-				|| "refresh_token".equals(grantType);
+		return "authorization_code".equals(grantType) || "password".equals(grantType);
 	}
 
 	/**

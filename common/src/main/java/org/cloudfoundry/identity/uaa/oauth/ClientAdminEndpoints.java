@@ -78,7 +78,7 @@ public class ClientAdminEndpoints implements InitializingBean {
 	private final Log logger = LogFactory.getLog(getClass());
 
 	private static final Set<String> VALID_GRANTS = new HashSet<String>(Arrays.asList("implicit", "password",
-			"client_credentials", "authorization_code", "refresh_token"));
+			"client_credentials", "authorization_code"));
 
 	private static final Collection<String> NON_ADMIN_INVALID_GRANTS = new HashSet<String>(Arrays.asList("password"));
 
@@ -322,13 +322,6 @@ public class ClientAdminEndpoints implements InitializingBean {
 				throw new InvalidClientDetailsException(grant + " is not an allowed grant type. Must be one of: "
 						+ VALID_GRANTS.toString());
 			}
-		}
-
-		if ((requestedGrantTypes.contains("authorization_code") || requestedGrantTypes.contains("password"))
-                && !requestedGrantTypes.contains("refresh_token")) {
-			logger.info("requested grant type missing refresh_token: " + clientId);
-
-			requestedGrantTypes.add("refresh_token");
 		}
 
 		if (!securityContextAccessor.isAdmin()) {
