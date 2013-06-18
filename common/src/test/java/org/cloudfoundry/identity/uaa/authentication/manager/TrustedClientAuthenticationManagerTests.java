@@ -41,9 +41,9 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
  * @author Dave Syer
  *
  */
-public class LoginAuthenticationManagerTests {
+public class TrustedClientAuthenticationManagerTests {
 
-	private LoginAuthenticationManager manager = new LoginAuthenticationManager();
+	private TrustedClientAuthenticationManager manager = new TrustedClientAuthenticationManager();
 
 	private UaaUserDatabase userDatabase = Mockito.mock(UaaUserDatabase.class);
 

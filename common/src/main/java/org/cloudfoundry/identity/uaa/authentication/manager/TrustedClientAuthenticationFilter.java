@@ -58,11 +58,11 @@ import org.springframework.security.web.AuthenticationEntryPoint;
  * @author jdsa
  *
  */
-public class LoginAuthenticationFilter implements Filter {
+public class TrustedClientAuthenticationFilter implements Filter {
 
 	private List<String> parameterNames = Collections.emptyList();
 
-	private static final Log logger = LogFactory.getLog(LoginAuthenticationFilter.class);
+	private static final Log logger = LogFactory.getLog(TrustedClientAuthenticationFilter.class);
 
 	private ObjectMapper mapper = new ObjectMapper();
 
@@ -72,7 +72,7 @@ public class LoginAuthenticationFilter implements Filter {
 
 	private final ClientDetailsService clientDetailsService;
 
-	public LoginAuthenticationFilter(AuthenticationManager authenticationManager,
+	public TrustedClientAuthenticationFilter(AuthenticationManager authenticationManager,
 			ClientDetailsService clientDetailsService) {
 		super();
 		this.authenticationManager = authenticationManager;

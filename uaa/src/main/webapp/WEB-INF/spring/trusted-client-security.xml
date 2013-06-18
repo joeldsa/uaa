@@ -17,16 +17,16 @@
 
 	<sec:http pattern="/authenticate/**" security="none" />
 
-	<http request-matcher-ref="loginAuthorizeRequestMatcher" create-session="always" entry-point-ref="oauthAuthenticationEntryPoint"
-		authentication-manager-ref="loginAuthenticationMgr" xmlns="http://www.springframework.org/schema/security">
+	<http request-matcher-ref="trustedAuthorizeRequestMatcher" create-session="always" entry-point-ref="oauthAuthenticationEntryPoint"
+		authentication-manager-ref="trustedClientAuthenticationMgr" xmlns="http://www.springframework.org/schema/security">
 		<intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY" />
 		<custom-filter ref="oauthResourceAuthenticationFilter" position="PRE_AUTH_FILTER" />
-		<custom-filter ref="loginAuthenticationFilter" position="FORM_LOGIN_FILTER" />
+		<custom-filter ref="trustedClientAuthenticationFilter" position="FORM_LOGIN_FILTER" />
 		<anonymous enabled="false" />
 		<access-denied-handler ref="oauthAccessDeniedHandler" />
 	</http>
 
-	<bean id="loginAuthorizeRequestMatcher" class="org.cloudfoundry.identity.uaa.security.web.UaaRequestMatcher">
+	<bean id="trustedAuthorizeRequestMatcher" class="org.cloudfoundry.identity.uaa.security.web.UaaRequestMatcher">
 		<constructor-arg value="/oauth/authorize" />
 		<property name="accept" value="application/json" />
 		<property name="parameters">
@@ -37,16 +37,16 @@
 	</bean>
 
 	<!-- Support for older login servers -->
-	<http request-matcher-ref="loginAuthorizeRequestMatcherOld" create-session="always" entry-point-ref="oauthAuthenticationEntryPoint"
-		authentication-manager-ref="loginAuthenticationMgr" xmlns="http://www.springframework.org/schema/security">
+	<http request-matcher-ref="trustedAuthorizeRequestMatcherOld" create-session="always" entry-point-ref="oauthAuthenticationEntryPoint"
+		authentication-manager-ref="trustedClientAuthenticationMgr" xmlns="http://www.springframework.org/schema/security">
 		<intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY" />
 		<custom-filter ref="oauthResourceAuthenticationFilter" position="PRE_AUTH_FILTER" />
-		<custom-filter ref="loginAuthenticationFilter" position="FORM_LOGIN_FILTER" />
+		<custom-filter ref="trustedClientAuthenticationFilter" position="FORM_LOGIN_FILTER" />
 		<anonymous enabled="false" />
 		<access-denied-handler ref="oauthAccessDeniedHandler" />
 	</http>
 
-	<bean id="loginAuthorizeRequestMatcherOld" class="org.cloudfoundry.identity.uaa.security.web.UaaRequestMatcher">
+	<bean id="trustedAuthorizeRequestMatcherOld" class="org.cloudfoundry.identity.uaa.security.web.UaaRequestMatcher">
 		<constructor-arg value="/oauth/authorize" />
 		<property name="accept" value="application/json" />
 		<property name="parameters">
@@ -57,8 +57,8 @@
 	</bean>
 	<!-- End support for older login servers -->
 
-	<bean id="loginAuthenticationFilter" class="org.cloudfoundry.identity.uaa.authentication.AuthzAuthenticationFilter">
-		<constructor-arg ref="loginAuthenticationMgr" />
+	<bean id="trustedClientAuthenticationFilter" class="org.cloudfoundry.identity.uaa.authentication.AuthzAuthenticationFilter">
+		<constructor-arg ref="trustedClientAuthenticationMgr" />
 		<property name="parameterNames">
 			<list>
 				<value>login</value>
@@ -76,7 +76,7 @@
         <property name="scimGroupProvisioning" ref="scimGroupProvisioning" />
 	</bean>
 
-	<bean id="loginAuthenticationMgr" class="org.cloudfoundry.identity.uaa.authentication.manager.LoginAuthenticationManager">
+	<bean id="trustedClientAuthenticationMgr" class="org.cloudfoundry.identity.uaa.authentication.manager.TrustedClientAuthenticationManager">
 		<property name="addNewAccounts" value="${login.addnew:false}" />
 		<property name="userDatabase" ref="userDatabase" />
 	</bean>
@@ -86,7 +86,7 @@
 	</bean>
 
 	<beans profile="default">
-		<bean id="loginAuthenticationMgr" class="org.cloudfoundry.identity.uaa.authentication.manager.LoginAuthenticationManager">
+		<bean id="trustedClientAuthenticationMgr" class="org.cloudfoundry.identity.uaa.authentication.manager.TrustedClientAuthenticationManager">
 			<property name="addNewAccounts" value="${login.addnew:true}" />
 			<property name="userDatabase" ref="userDatabase" />
 		</bean>

@@ -55,7 +55,7 @@
         <intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY" />
         <anonymous enabled="false" />
         <custom-filter ref="oauthResourceAuthenticationFilter" position="PRE_AUTH_FILTER" />
-        <custom-filter ref="authServerAuthenticationFilter" after="PRE_AUTH_FILTER" />
+        <custom-filter ref="trustedClientAuthenticationFilter" after="PRE_AUTH_FILTER" />
         <access-denied-handler ref="oauthAccessDeniedHandler" />
     </http>
 
@@ -82,8 +82,8 @@
 		<access-denied-handler ref="oauthAccessDeniedHandler" />
 	</http>
 
-    <bean id="authServerAuthenticationFilter" class="org.cloudfoundry.identity.uaa.authentication.manager.LoginAuthenticationFilter">
-        <constructor-arg ref="loginAuthenticationMgr" />
+    <bean id="trustedClientAuthenticationFilter" class="org.cloudfoundry.identity.uaa.authentication.manager.TrustedClientAuthenticationFilter">
+        <constructor-arg ref="trustedClientAuthenticationMgr" />
         <constructor-arg ref="jdbcClientDetailsService" />
         <property name="parameterNames">
             <list>
@@ -106,7 +106,7 @@
 	</bean>
 	
 	<bean id="tokenEndpointAuthenticationFilter2" class="org.springframework.security.oauth2.provider.endpoint.TokenEndpointAuthenticationFilter">
-        <constructor-arg ref="loginAuthenticationMgr" />
+        <constructor-arg ref="trustedClientAuthenticationMgr" />
         <property name="authenticationDetailsSource" ref="authenticationDetailsSource" />
     </bean>
 

@@ -24,7 +24,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.common.util.RandomValueStringGenerator;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
-public class LoginAuthenticationManager implements AuthenticationManager, ApplicationEventPublisherAware {
+public class TrustedClientAuthenticationManager implements AuthenticationManager, ApplicationEventPublisherAware {
 
 	private final Log logger = LogFactory.getLog(getClass());
 

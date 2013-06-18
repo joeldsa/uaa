@@ -50,7 +50,7 @@ import org.springframework.web.client.RestTemplate;
  * 
  * @author Dave Syer
  */
-public class LoginServerSecurityIntegrationTests {
+public class TrustedClientSecurityIntegrationTests {
 
 	private final String JOE = "joe" + new RandomValueStringGenerator().generate().toLowerCase();
 
@@ -209,7 +209,7 @@ public class LoginServerSecurityIntegrationTests {
 	private static class LoginClient extends ClientCredentialsResourceDetails {
 		@SuppressWarnings("unused")
 		public LoginClient(Object target) {
-			LoginServerSecurityIntegrationTests test = (LoginServerSecurityIntegrationTests) target;
+			TrustedClientSecurityIntegrationTests test = (TrustedClientSecurityIntegrationTests) target;
 			ClientCredentialsResourceDetails resource = test.testAccounts.getClientCredentialsResource(
 					"oauth.clients.login", "login", "loginsecret");
 			setClientId(resource.getClientId());
