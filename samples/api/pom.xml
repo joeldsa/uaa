@@ -73,6 +73,20 @@
 					<type>war</type>
 					<scope>tomcat</scope>
 				</dependency>
+				<dependency>
+                                        <groupId>org.cloudfoundry.identity</groupId>
+                                        <artifactId>api</artifactId>
+                                        <version>${project.version}</version>
+                                        <type>war</type>
+                                        <scope>tomcat</scope>
+                                </dependency>
+                                <dependency>
+                                        <groupId>org.cloudfoundry.identity</groupId>
+                                        <artifactId>app</artifactId>
+                                        <version>${project.version}</version>
+                                        <type>war</type>
+                                        <scope>tomcat</scope>
+                                </dependency>
 			</dependencies>
 		</profile>
 	</profiles>

@@ -60,6 +60,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
+import org.springframework.security.ldap.userdetails.LdapUserDetails;
 import org.springframework.security.oauth2.common.DefaultExpiringOAuth2RefreshToken;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.DefaultOAuth2RefreshToken;
@@ -403,7 +404,14 @@ public class UaaTokenServices implements AuthorizationServerTokenServices, Resou
 		ExpiringOAuth2RefreshToken token = new DefaultExpiringOAuth2RefreshToken(UUID.randomUUID().toString(),
 				new Date(System.currentTimeMillis() + (validitySeconds * 1000L)));
 
-		UaaUser user = userDatabase.retrieveUserByName(((Principal) authentication.getPrincipal()).getName());
+		String username = null;
+		if(authentication.getPrincipal() instanceof Principal) {
+			username = ((Principal) authentication.getPrincipal()).getName();
+		} else if(authentication.getPrincipal() instanceof LdapUserDetails) {
+			username = ((LdapUserDetails) authentication.getPrincipal()).getUsername();
+		}
+
+		UaaUser user = userDatabase.retrieveUserByName(username);
 
 		String content;
 		try {

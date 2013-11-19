@@ -65,5 +65,25 @@
 		<jdbc:script location="classpath*:org/cloudfoundry/identity/uaa/schema-#{@scripts}.sql" />
 		<jdbc:script location="classpath*:org/cloudfoundry/identity/uaa/scim/schema-#{@scripts}.sql" />
 	</jdbc:initialize-database>
+	
+	<beans profile="ldap">
+
+       <bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource">
+          <property name="url" value="${ldap.url}" />
+          <property name="base" value="${ldap.baseDN}" />
+          <property name="userDn" value="${ldap.userDN}" />
+          <property name="password" value="${ldap.userPassword}" />
+          <property name="baseEnvironmentProperties">
+            <map>
+                <entry key="com.sun.jndi.ldap.connect.timeout" value="${ldap.server_connection_timeout_msec:10000}" />
+            </map>
+           </property>
+       </bean>
+    
+       <bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
+          <constructor-arg ref="contextSource" />
+       </bean>
+       
+    </beans>
 
 </beans>
